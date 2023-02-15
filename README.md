@@ -2,9 +2,9 @@
 An application to track and visualize character relationships of fictional characters.
 
 ## Requirements
-Django         == 4.1.7
-django-jazzmin == 2.6.0
-python-dotenv  == 0.21.1
+* Django         == 4.1.7
+* django-jazzmin == 2.6.0
+* python-dotenv  == 0.21.1
 
 ## License
 Bond
