@@ -1,0 +1,8 @@
+*.bkp
+*.dtmp
+*.dot
+.env
+.directory
+__pycache__
+venv
+migrations
