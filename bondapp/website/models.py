@@ -1,6 +1,7 @@
 from enum import unique
 from django.db import models
 
+
 class Characters(models.Model):
     """Creates table with characters"""
     first_name = models.CharField(max_length=100, verbose_name='First name')
@@ -28,6 +29,7 @@ class Characters(models.Model):
         verbose_name = 'Character'
         verbose_name_plural = 'Characters'
 
+
 class Factions(models.Model):
     """Creates table with factions"""
     faction_name = models.CharField(max_length=100, verbose_name='Faction')
@@ -50,6 +52,7 @@ class Factions(models.Model):
         """Used for translation"""
         verbose_name = 'Faction'
         verbose_name_plural = 'Factions'
+
 
 class Gallery(models.Model):
     """Creates table for character images"""

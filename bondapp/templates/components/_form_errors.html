@@ -1,20 +1,20 @@
 {% if form.errors %}
 <div class="form-error">
-    {% for field in form %}
-        <!-- Field related errors -->
-        {% for error in field.errors %}
-            <div class="alert alert-danger" role="alert">
-                <!-- Text only -->
-                {{ error|escape }}
-            </div>
-        {% endfor %}
+  {% for field in form %}
+    <!-- Field related errors -->
+    {% for error in field.errors %}
+      <div class="alert alert-danger" role="alert">
+        <!-- Text only -->
+          {{ error|escape }}
+      </div>
     {% endfor %}
+  {% endfor %}
 
-    {% for error in form.non_field_errors %}
-        <!-- Not field related errors -->
-        <div class="alert alert-danger" role="alert">
-            {{ error|escape }}
-        </div>
-    {% endfor %}
+  {% for error in form.non_field_errors %}
+    <!-- Not field related errors -->
+    <div class="alert alert-danger" role="alert">
+      {{ error|escape }}
+    </div>
+  {% endfor %}
 </div>
 {% endif %}

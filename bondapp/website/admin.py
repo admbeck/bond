@@ -2,11 +2,13 @@ from django.contrib import admin
 from .models import Characters, Factions, Gallery
 from django.utils.safestring import mark_safe
 
+
 class GalleryInline(admin.TabularInline):
     """Creates inline image upload in admin panel for characters"""
     model = Gallery
     fk_name = 'character'
     extra = 1
+
 
 @admin.register(Characters)
 class CharactersAdmin(admin.ModelAdmin):
@@ -25,6 +27,7 @@ class CharactersAdmin(admin.ModelAdmin):
             return '-'
 
     get_photo.short_description = 'Thumbnail'
+
 
 @admin.register(Factions)
 class FactionsAdmin(admin.ModelAdmin):
