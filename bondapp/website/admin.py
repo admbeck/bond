@@ -27,8 +27,7 @@ class CharactersAdmin(admin.ModelAdmin):
     def get_photo(self, obj):
         """For thumbnails"""
         if obj.images:
-            return mark_safe(f'<img src="{obj.images.all()[0].image.url}" \
-                             width="75">')
+            return mark_safe(f'<img src="{obj.images.all()[0].image.url}" width="75" height="75">')
         else:
             return '-'
 
