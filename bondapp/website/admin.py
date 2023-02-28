@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Characters, Factions, Gallery, Relationships, RelationshipCategories
+from .models import Characters, Factions, Gallery, \
+                    Relationships, RelationshipCategories
 from django.utils.safestring import mark_safe
 
 
@@ -9,16 +10,15 @@ class GalleryInline(admin.TabularInline):
     fk_name = 'character'
     extra = 1
 
-class RelationshipInline(admin.TabularInline):
-    """Create inline relationship changing in admin panel for Characters"""
-    # TODO:
-    # complete inline function like GalleryInline
-
 
 @admin.register(Characters)
 class CharactersAdmin(admin.ModelAdmin):
     """Creates panel for characters with automatic slugs"""
-    list_display = ('first_name', 'last_name', 'race', 'char_class', 'get_photo')
+    list_display = ('first_name',
+                    'last_name',
+                    'race',
+                    'char_class',
+                    'get_photo')
     list_display_links = ('first_name', 'last_name')
     prepopulated_fields = {'slug': ('first_name', 'last_name')}
     list_filter = ('first_name', 'last_name')
@@ -26,8 +26,9 @@ class CharactersAdmin(admin.ModelAdmin):
 
     def get_photo(self, obj):
         """For thumbnails"""
-        if obj.images:
-            return mark_safe(f'<img src="{obj.images.all()[0].image.url}" width="75" height="75">')
+        if obj.images.all():
+            return mark_safe(f'<img src="{obj.images.all()[0].image.url}" \
+                    width="75" height="75">')
         else:
             return '-'
 
@@ -44,4 +45,5 @@ class FactionsAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Relationships)
+admin.site.register(RelationshipCategories)
 admin.site.register(Gallery)

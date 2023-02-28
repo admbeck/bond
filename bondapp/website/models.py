@@ -1,28 +1,36 @@
-from enum import unique
 from django.db import models
 
 
 class Characters(models.Model):
     """Creates table with characters"""
     first_name = models.CharField(max_length=100, verbose_name='First name')
-    middle_name = models.CharField(max_length=100, blank=True, verbose_name='Middle name')
-    last_name = models.CharField(max_length=100, blank=True, verbose_name='Last name')
+    middle_name = models.CharField(max_length=100, blank=True,
+                                   verbose_name='Middle name')
+    last_name = models.CharField(max_length=100, blank=True,
+                                 verbose_name='Last name')
     title = models.CharField(max_length=100, blank=True, verbose_name='Title')
     race = models.CharField(max_length=100, verbose_name='Race')
     char_class = models.CharField(max_length=100, verbose_name='Class')
-    char_age = models.CharField(max_length=100, blank=True, verbose_name='Age')
-    eye_color = models.CharField(max_length=100, blank=True, verbose_name='Eye color')
-    height = models.CharField(max_length=100, blank=True, verbose_name='Height')
-    body_shape = models.CharField(max_length=100, blank=True, verbose_name='Body shape')
-    birthplace = models.CharField(max_length=100, blank=True, verbose_name='Birthplace')
-    residence = models.CharField(max_length=100, blank=True, verbose_name='Residence')
+    char_age = models.CharField(max_length=100, blank=True,
+                                verbose_name='Age')
+    eye_color = models.CharField(max_length=100, blank=True,
+                                 verbose_name='Eye color')
+    height = models.CharField(max_length=100, blank=True,
+                              verbose_name='Height')
+    body_shape = models.CharField(max_length=100, blank=True,
+                                  verbose_name='Body shape')
+    birthplace = models.CharField(max_length=100, blank=True,
+                                  verbose_name='Birthplace')
+    residence = models.CharField(max_length=100, blank=True,
+                                 verbose_name='Residence')
     slug = models.SlugField(unique=True, null=True)
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
 
     def __repr__(self):
-        return f'Character: pk={self.pk}, name={self.first_name} {self.last_name}'
+        return f'Character: pk={self.pk}, \
+                name={self.first_name} {self.last_name}'
 
     class Meta:
         """Used for translation"""
@@ -33,7 +41,10 @@ class Characters(models.Model):
 class Factions(models.Model):
     """Creates table with factions"""
     faction_name = models.CharField(max_length=100, verbose_name='Faction')
-    faction_image = models.ImageField(upload_to='faction/', null=True, blank=True, verbose_name='Faction icon')
+    faction_image = models.ImageField(upload_to='faction/',
+                                      null=True,
+                                      blank=True,
+                                      verbose_name='Faction icon')
     slug = models.SlugField(unique=True, null=True)
     parent = models.ForeignKey('self',
                                on_delete=models.CASCADE,
@@ -41,6 +52,7 @@ class Factions(models.Model):
                                blank=True,
                                verbose_name='Primary-faction',
                                related_name='primaryfaction')
+    members = models.ManyToManyField(Characters)
 
     def __str__(self):
         return self.faction_name
@@ -56,8 +68,10 @@ class Factions(models.Model):
 
 class Gallery(models.Model):
     """Creates table for character images"""
-    image = models.ImageField(upload_to='character/', verbose_name='Character Image')
-    character = models.ForeignKey(Characters, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(upload_to='character/',
+                              verbose_name='Character Image')
+    character = models.ForeignKey(Characters, on_delete=models.CASCADE,
+                                  related_name='images')
 
     class Meta:
         """Used for translation"""
@@ -65,10 +79,29 @@ class Gallery(models.Model):
         verbose_name_plural = 'Character gallery'
 
 
+class RelationshipCategories(models.Model):
+    """Creates table for predefined relationship categories"""
+    relationship = models.CharField(max_length=64, verbose_name='Relationship')
+    color = models.CharField(max_length=7, default="#ffffff",
+                             verbose_name='Colors')
+
+    def __str__(self):
+        return self.relationship
+
+    def __repr__(self):
+        return f'Relationship: pk={self.pk}, relationship={self.relationship},\
+                color={self.color}'
+
+    class Meta:
+        """Used for translation"""
+        verbose_name = 'Relationship category'
+        verbose_name_plural = 'Relationship categories'
+
+
 class Relationships(models.Model):
     """Creates table for character Relationships"""
     char = models.ManyToManyField(Characters)
-    relation = models.ForeignKey('self',
+    relation = models.ForeignKey(RelationshipCategories,
                                  on_delete=models.CASCADE,
                                  null=True,
                                  blank=True,
@@ -80,15 +113,10 @@ class Relationships(models.Model):
         return self.pk
 
     def __repr__(self):
-        return f'Relations: pk={self.pk}, char={self.char}, relation={self.relation}'
+        return f'Relations: pk={self.pk}, char={self.char}, \
+                relation={self.relation}'
 
     class Meta:
         """Used for translation"""
         verbose_name = 'Relation'
         verbose_name_plural = 'Relations'
-
-
-class RelationshipCategories(models.Model):
-    """Creates table for predefined relationship categories"""
-    relationship = models.CharField(max_length=64, verbose_name='Relationship')
-    color = models.CharField(max_length=7, default="#ffffff", verbose_name='Colors')
