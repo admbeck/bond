@@ -63,3 +63,32 @@ class Gallery(models.Model):
         """Used for translation"""
         verbose_name = 'Character gallery'
         verbose_name_plural = 'Character gallery'
+
+
+class Relationships(models.Model):
+    """Creates table for character Relationships"""
+    char = models.ManyToManyField(Characters)
+    relation = models.ForeignKey('self',
+                                 on_delete=models.CASCADE,
+                                 null=True,
+                                 blank=True,
+                                 default='Neutral',
+                                 verbose_name='Relationship Category',
+                                 related_name='relationshipcategory')
+
+    def __str__(self):
+        return self.pk
+
+    def __repr__(self):
+        return f'Relations: pk={self.pk}, char={self.char}, relation={self.relation}'
+
+    class Meta:
+        """Used for translation"""
+        verbose_name = 'Relation'
+        verbose_name_plural = 'Relations'
+
+
+class RelationshipCategories(models.Model):
+    """Creates table for predefined relationship categories"""
+    relationship = models.CharField(max_length=64, verbose_name='Relationship')
+    color = models.CharField(max_length=7, default="#ffffff", verbose_name='Colors')

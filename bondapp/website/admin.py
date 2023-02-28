@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Characters, Factions, Gallery
+from .models import Characters, Factions, Gallery, Relationships, RelationshipCategories
 from django.utils.safestring import mark_safe
 
 
@@ -8,6 +8,11 @@ class GalleryInline(admin.TabularInline):
     model = Gallery
     fk_name = 'character'
     extra = 1
+
+class RelationshipInline(admin.TabularInline):
+    """Create inline relationship changing in admin panel for Characters"""
+    # TODO:
+    # complete inline function like GalleryInline
 
 
 @admin.register(Characters)
@@ -38,4 +43,5 @@ class FactionsAdmin(admin.ModelAdmin):
     list_filter = ('faction_name', 'parent')
 
 
+admin.site.register(Relationships)
 admin.site.register(Gallery)
